@@ -9,8 +9,6 @@ import org.junit.runners.MethodSorters;
 import java.io.File;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.util.Collections;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +23,6 @@ public class StartStopTest extends TestBase {
     private static final long TIMEOUT_MS = TimeUnit.SECONDS.toMillis(1);
     private static int port;
     private static File data;
-    private static Set<String> endpoints;
     private static KVService storage;
     @Rule
     public final Timeout globalTimeout = Timeout.millis(TIMEOUT_MS * 2);
@@ -34,7 +31,6 @@ public class StartStopTest extends TestBase {
     public static void beforeAll() throws IOException {
         port = randomPort();
         data = Files.createTempDirectory();
-        endpoints = Collections.singleton(endpoint(port));
     }
 
     @AfterClass
@@ -54,7 +50,7 @@ public class StartStopTest extends TestBase {
 
     @Test
     public void create() throws Exception {
-        storage = KVServiceFactory.create(port, data, endpoints);
+        storage = KVServiceFactory.create(port, data);
         try {
             // Should not respond before start
             status();

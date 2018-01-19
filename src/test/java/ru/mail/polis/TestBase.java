@@ -37,9 +37,4 @@ abstract class TestBase {
         response.getEntity().writeTo(byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
-
-    @NotNull
-    static String endpoint(final int port) {
-        return "http://localhost:" + port;
-    }
 }
